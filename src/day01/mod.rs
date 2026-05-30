@@ -62,6 +62,25 @@ fn part_two(path: &str) -> i32 {
     res
 }
 
+fn part_one_try_hard(path: &str) -> i32 {
+    let lines = utils::read_input(path);
+    let rotations = to_rotations(lines);
+
+    let mut res = 0;
+    let mut dial_pointer = 50;
+    for rotation in rotations {
+        // Use modular arithmethic to claculate the result
+        dial_pointer = match rotation.direction {
+            Direction::Left => (dial_pointer - rotation.distance) % 100,
+            Direction::Right => (dial_pointer + rotation.distance) % 100,
+        };
+        if dial_pointer == 0 {
+            res += 1;
+        }
+    }
+    res
+}
+
 fn to_rotations(lines: Vec<String>) -> Vec<Rotation> {
     lines
         .iter()
@@ -88,11 +107,10 @@ mod tests {
     use super::*;
 
     #[test]
-    #[ignore]
     fn test_case_0() {
         let input = "./src/day01/test_input_0.txt";
         let expected = 3;
-        let result = part_one(input);
+        let result = part_one_try_hard(input);
         assert_eq!(result, expected);
     }
 
@@ -109,10 +127,10 @@ mod tests {
     fn solve_it_0() {
         let input = "./src/day01/input_0.txt";
         let expected = 1105;
-        let result = part_one(input);
+        let result = part_one_try_hard(input);
         println!();
         println!("-----------------------------------------");
-        println!("Result for the part one: {:?}", expected);
+        println!("Result for the part one: {:?}", result);
         println!("------------------------------------------");
         println!();
         assert_eq!(result, expected);

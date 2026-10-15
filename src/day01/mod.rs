@@ -3,7 +3,7 @@ use super::utils;
 #[derive(Debug)]
 struct Rotation {
     pub direction: Direction,
-    pub distance: i32,
+    pub distance: u64,
 }
 
 #[derive(Debug)]
@@ -12,15 +12,15 @@ enum Direction {
     Right,
 }
 
-pub fn solve(part: u8) -> i32 {
+pub fn solve(part: u8) -> u64 {
     match part {
         1 => part_one("./src/day01/input_0.txt"),
         2 => part_two("./src/day01/input_0.txt"),
-        _ => -1,
+        _ => 0,
     }
 }
 
-fn part_one(path: &str) -> i32 {
+fn part_one(path: &str) -> u64 {
     let lines = utils::read_input(path);
 
     let rotations = to_rotations(lines);
@@ -41,7 +41,7 @@ fn part_one(path: &str) -> i32 {
     res
 }
 
-fn part_two(path: &str) -> i32 {
+fn part_two(path: &str) -> u64 {
     let lines = utils::read_input(path);
 
     let rotations = to_rotations(lines);
@@ -62,7 +62,7 @@ fn part_two(path: &str) -> i32 {
     res
 }
 
-fn part_one_try_hard(path: &str) -> i32 {
+fn part_one_try_hard(path: &str) -> u64 {
     let lines = utils::read_input(path);
     let rotations = to_rotations(lines);
 
@@ -87,7 +87,7 @@ fn to_rotations(lines: Vec<String>) -> Vec<Rotation> {
         .filter(|line| line.len() > 1)
         .map(|line| {
             let mut direction = line.clone();
-            let distance: i32 = direction.split_off(1).parse().expect("Invalid distance");
+            let distance: u64 = direction.split_off(1).parse().expect("Invalid distance");
             let direction = match direction.as_str() {
                 "L" => Ok(Direction::Left),
                 "R" => Ok(Direction::Right),

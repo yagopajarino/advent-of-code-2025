@@ -1,4 +1,5 @@
 mod day01;
+mod day02;
 mod utils;
 use clap::Parser;
 
@@ -19,7 +20,8 @@ fn main() {
     let args = Args::parse();
     let res = match args.day {
         1 => day01::solve(args.part),
-        _ => -1,
+        2 => day02::solve(args.part),
+        _ => 0,
     };
 
     println!(
